@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AvaliaÃ§Ã£o MÃ©dica Gratuita | VÃ‰RTICE FITNESS</title>
+  <meta name="description" content="Comece seus treinos com mais seguranÃ§a. Agende sua consulta de avaliaÃ§Ã£o mÃ©dica gratuita em qualquer uma das 89 academias VÃ©rtice em SÃ£o Paulo.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            vertice: {
+              wine: '#7A1630',
+              'wine-dark': '#520F20',
+              'wine-light': '#9B1D3D',
+              black: '#0B0B0D',
+              navy: '#101C35',
+              'navy-dark': '#0A1122',
+              'navy-light': '#1A2E56',
+            },
+            surface: {
+              1: '#111115',
+              2: '#16171E',
+              3: '#1E202B'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Montserrat', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-vertice-black text-gray-100 antialiased selection:bg-vertice-wine selection:text-white flex flex-col min-h-screen">
+
+  <!-- Header Fixo -->
+  <header class="fixed top-0 left-0 right-0 z-50 nav-glass transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-3 group text-left">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-vertice-wine to-vertice-navy flex items-center justify-center shadow-lg shadow-vertice-wine/30 group-hover:scale-105 transition">
+            <span class="font-heading font-black text-xl text-white">V</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-heading font-extrabold text-xl tracking-wider text-white flex items-center gap-1">
+              VÃ‰RTICE <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-vertice-wine text-white">FITNESS</span>
+            </span>
+            <span class="text-[10px] text-gray-400 tracking-widest uppercase">89 Unidades em SP</span>
+          </div>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-1.5 text-sm font-medium">
+          <a href="index.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            InÃ­cio
+          </a>
+          <a href="academias.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Academias
+          </a>
+          <a href="planos.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Planos
+          </a>
+          <a href="exercicios.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            ExercÃ­cios
+          </a>
+          <a href="personal.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Personal
+          </a>
+          <a href="avaliacao-medica.html" class="px-3.5 py-2 rounded-lg transition bg-vertice-wine text-white font-semibold shadow-md flex items-center gap-1.5">
+            <span>AvaliaÃ§Ã£o MÃ©dica</span>
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/40">GRÃTIS</span>
+          </a>
+          <a href="login.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Login
+          </a>
+        </nav>
+
+        <div class="hidden md:flex items-center gap-3">
+          <a href="login.html" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition">
+            Ãrea do Cliente
+          </a>
+          <button onclick="window.app.openModal('modal-enroll')" class="btn-vertice-primary px-4 py-2 text-sm font-semibold">
+            Matricule-se agora
+          </button>
+        </div>
+
+        <button id="btn-mobile-menu" class="lg:hidden p-2 rounded-lg bg-surface-2 text-gray-300 hover:text-white focus:outline-none" aria-label="Abrir menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Gaveta Mobile -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-vertice-black/95 border-b border-white/10 px-4 pt-2 pb-6 space-y-2">
+      <a href="index.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">InÃ­cio</a>
+      <a href="academias.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">Academias (89 Unidades)</a>
+      <a href="planos.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">Planos & Fidelidade</a>
+      <a href="exercicios.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">Tutoriais de ExercÃ­cios</a>
+      <a href="personal.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">Personal Trainer</a>
+      <a href="avaliacao-medica.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-semibold bg-vertice-wine text-white flex items-center justify-between">
+        <span>AvaliaÃ§Ã£o MÃ©dica</span>
+        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/40">GRÃTIS</span>
+      </a>
+      <a href="login.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">Login / Ãrea do Aluno</a>
+    </div>
+  </header>
+
+  <!-- ConteÃºdo da PÃ¡gina AvaliaÃ§Ã£o MÃ©dica -->
+  <main class="flex-1 pt-28 pb-20 bg-gradient-to-b from-surface-1 to-vertice-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="card-vertice p-8 md:p-12 border-vertice-wine/40 relative overflow-hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <div class="lg:col-span-6 space-y-4">
+            <span class="text-xs font-bold px-3 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40 uppercase tracking-widest">
+              SeguranÃ§a & SaÃºde em Primeiro Lugar
+            </span>
+            <h1 class="font-heading text-3xl sm:text-4xl font-black text-white">
+              AvaliaÃ§Ã£o mÃ©dica gratuita
+            </h1>
+            <p class="text-lg text-rose-200 font-medium">
+              "Comece seus treinos com mais seguranÃ§a."
+            </p>
+            <p class="text-xs text-gray-300 leading-relaxed font-light">
+              Na VÃ©rtice Fitness, cada aluno tem direito a realizar uma consulta de avaliaÃ§Ã£o mÃ©dica completa sem nenhum custo adicional. Nossos especialistas analisam sua composiÃ§Ã£o corporal, histÃ³rico cardiovascular e mobilidade funcional.
+            </p>
+
+            <div class="p-4 rounded-xl bg-black/50 border border-white/10 flex items-center justify-between">
+              <div>
+                <span class="text-xs text-gray-400 block font-medium">Investimento da Consulta:</span>
+                <span class="text-2xl font-black text-emerald-400">GRATUITA</span>
+              </div>
+              <span class="text-xs text-gray-400">Em qualquer uma das 89 unidades</span>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 bg-surface-2 p-6 rounded-2xl border border-white/10">
+            <h3 class="text-lg font-bold text-white mb-4">Agendar Minha Consulta GrÃ¡tis</h3>
+            <form id="form-medical-booking" class="space-y-4">
+              <div>
+                <label class="block text-xs font-medium text-gray-300 mb-1">Escolha a Unidade:</label>
+                <select id="med-gym-select" class="vertice-input w-full p-2.5 text-xs"></select>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-medium text-gray-300 mb-1">Data Desejada:</label>
+                  <input type="date" id="med-date" class="vertice-input w-full p-2.5 text-xs" required>
+                </div>
+                <div>
+                  <label class="block text-xs font-medium text-gray-300 mb-1">HorÃ¡rio:</label>
+                  <select id="med-time" class="vertice-input w-full p-2.5 text-xs" required>
+                    <option value="08:00">08:00</option>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <option value="11:00">11:00</option>
+                    <option value="14:00">14:00</option>
+                    <option value="15:00">15:00</option>
+                    <option value="16:00">16:00</option>
+                    <option value="17:00">17:00</option>
+                    <option value="18:30">18:30</option>
+                  </select>
+                </div>
+              </div>
+
+              <button type="submit" class="btn-vertice-primary w-full py-3.5 text-xs font-semibold mt-2">
+                Confirmar Agendamento Gratuito
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- RodapÃ© -->
+  <footer class="bg-black border-t border-white/10 pt-16 pb-12 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+        <div class="md:col-span-4 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-vertice-wine to-vertice-navy flex items-center justify-center font-heading font-black text-white text-lg">V</div>
+            <span class="font-heading font-extrabold text-xl text-white">VÃ‰RTICE FITNESS</span>
+          </div>
+          <p class="text-xs text-gray-400">AvaliaÃ§Ãµes mÃ©dicas periÃ³dicas para treino consciente e seguro.</p>
+        </div>
+        <div class="md:col-span-3 space-y-3">
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider">PÃ¡ginas</h4>
+          <ul class="space-y-2 text-xs text-gray-400">
+            <li><a href="index.html" class="hover:text-white transition">InÃ­cio</a></li>
+            <li><a href="academias.html" class="hover:text-white transition">Academias (89 Unidades)</a></li>
+            <li><a href="planos.html" class="hover:text-white transition">Planos e Fidelidade</a></li>
+            <li><a href="exercicios.html" class="hover:text-white transition">Tutoriais de ExercÃ­cios</a></li>
+            <li><a href="personal.html" class="hover:text-white transition">Personal Trainer</a></li>
+            <li><a href="avaliacao-medica.html" class="text-white font-semibold">AvaliaÃ§Ã£o MÃ©dica Gratuita</a></li>
+            <li><a href="login.html" class="hover:text-white transition">Ãrea do Aluno / Login</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="text-xs text-gray-500 pt-6">Â© 2026 VÃ©rtice Fitness Brasil Ltda. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <script src="js/database-standalone.js"></script>
+  <script src="js/app-standalone.js"></script>
+</body>
+</html>
+

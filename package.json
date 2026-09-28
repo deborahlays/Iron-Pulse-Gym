@@ -1,0 +1,24 @@
+{
+  "name": "vertice-fitness-iron-pulse",
+  "version": "1.0.0",
+  "description": "Plataforma oficial da rede Vértice Fitness com 89 unidades em São Paulo",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve . -p 3000",
+    "dev": "serve . -p 3000"
+  },
+  "keywords": [
+    "gym",
+    "fitness",
+    "vertice",
+    "iron-pulse",
+    "sao-paulo",
+    "totalpass",
+    "personal-trainer"
+  ],
+  "author": "Vértice Fitness Team",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

@@ -1,0 +1,399 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Ãrea do Cliente | VÃ‰RTICE FITNESS</title>
+  <meta name="description" content="Acesse a Ãrea do Cliente VÃ©rtice Fitness. Acompanhe seu plano, agendamentos, diÃ¡rias de personal e o progresso da sua Fidelidade VÃ©rtice.">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            vertice: {
+              wine: '#7A1630',
+              'wine-dark': '#520F20',
+              'wine-light': '#9B1D3D',
+              black: '#0B0B0D',
+              navy: '#101C35',
+              'navy-dark': '#0A1122',
+              'navy-light': '#1A2E56',
+            },
+            surface: {
+              1: '#111115',
+              2: '#16171E',
+              3: '#1E202B'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Montserrat', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-vertice-black text-gray-100 antialiased selection:bg-vertice-wine selection:text-white flex flex-col min-h-screen">
+
+  <!-- Header Fixo -->
+  <header class="fixed top-0 left-0 right-0 z-50 nav-glass transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-3 group text-left">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-vertice-wine to-vertice-navy flex items-center justify-center shadow-lg shadow-vertice-wine/30 group-hover:scale-105 transition">
+            <span class="font-heading font-black text-xl text-white">V</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-heading font-extrabold text-xl tracking-wider text-white flex items-center gap-1">
+              VÃ‰RTICE <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-vertice-wine text-white">FITNESS</span>
+            </span>
+            <span class="text-[10px] text-gray-400 tracking-widest uppercase">89 Unidades em SP</span>
+          </div>
+        </a>
+
+        <nav class="hidden lg:flex items-center gap-1.5 text-sm font-medium">
+          <a href="index.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            InÃ­cio
+          </a>
+          <a href="academias.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Academias
+          </a>
+          <a href="planos.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Planos
+          </a>
+          <a href="exercicios.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            ExercÃ­cios
+          </a>
+          <a href="personal.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Personal
+          </a>
+          <a href="avaliacao-medica.html" class="px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-1.5">
+            <span>AvaliaÃ§Ã£o MÃ©dica</span>
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/40">GRÃTIS</span>
+          </a>
+          <a href="login.html" class="px-3.5 py-2 rounded-lg transition bg-vertice-wine text-white font-semibold shadow-md">
+            Login
+          </a>
+        </nav>
+
+        <div class="hidden md:flex items-center gap-3">
+          <a href="login.html" class="px-4 py-2 text-sm font-semibold text-white bg-surface-2 border border-vertice-wine/50 rounded-lg">
+            Ãrea do Cliente
+          </a>
+          <button onclick="window.app.openModal('modal-enroll')" class="btn-vertice-primary px-4 py-2 text-sm font-semibold">
+            Matricule-se agora
+          </button>
+        </div>
+
+        <button id="btn-mobile-menu" class="lg:hidden p-2 rounded-lg bg-surface-2 text-gray-300 hover:text-white focus:outline-none" aria-label="Abrir menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Gaveta Mobile -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-vertice-black/95 border-b border-white/10 px-4 pt-2 pb-6 space-y-2">
+      <a href="index.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">InÃ­cio</a>
+      <a href="academias.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">Academias (89 Unidades)</a>
+      <a href="planos.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">Planos & Fidelidade</a>
+      <a href="exercicios.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">Tutoriais de ExercÃ­cios</a>
+      <a href="personal.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5">Personal Trainer</a>
+      <a href="avaliacao-medica.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-emerald-400 hover:bg-white/5 flex items-center justify-between">
+        <span>AvaliaÃ§Ã£o MÃ©dica</span>
+        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/40">GRÃTIS</span>
+      </a>
+      <a href="login.html" class="block w-full text-left py-2 px-3 rounded-lg text-sm font-semibold bg-vertice-wine text-white">Login / Ãrea do Aluno</a>
+    </div>
+  </header>
+
+  <!-- ConteÃºdo da PÃ¡gina Login / Dashboard -->
+  <main class="flex-1 pt-28 pb-20 bg-vertice-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- CASO 1: SE NÃƒO ESTIVER LOGADO (TELA DE LOGIN MODERNA) -->
+      <div id="login-view-unauth" class="max-w-md mx-auto">
+        <div class="bg-surface-1 border border-vertice-subtle rounded-2xl overflow-hidden shadow-2xl">
+          <div class="p-6 bg-gradient-to-r from-vertice-wine to-vertice-navy text-white text-center">
+            <h1 class="font-heading font-black text-2xl">Ãrea do Cliente VÃ©rtice</h1>
+            <p class="text-xs text-rose-200 mt-1">Acesse sua conta com seu e-mail e senha</p>
+          </div>
+
+          <div class="p-6 space-y-5">
+            <!-- Destaque sobre Senha Inicial como Data de Nascimento -->
+            <div class="p-4 bg-vertice-navy/60 border border-blue-900/60 rounded-xl text-xs space-y-1.5">
+              <p class="font-bold text-blue-300 flex items-center gap-1.5">
+                <span>ðŸ“Œ</span> Senha PadrÃ£o de Primeiro Acesso:
+              </p>
+              <p class="text-gray-300 leading-relaxed">
+                Sua senha inicial Ã© sua <strong>data de nascimento</strong> completa (sem barras).<br>
+                Exemplo: Data 15/08/1995 âž” Senha: <span class="font-mono text-amber-300 font-bold">15081995</span>.
+              </p>
+            </div>
+
+            <form id="form-login" class="space-y-4">
+              <div>
+                <label class="block text-xs font-semibold text-gray-300 mb-1">E-mail do Aluno:</label>
+                <input type="email" id="login-email" class="vertice-input w-full p-3 text-sm" placeholder="seuemail@exemplo.com" required>
+              </div>
+
+              <div>
+                <div class="flex justify-between items-center mb-1">
+                  <label class="text-xs font-semibold text-gray-300">Senha:</label>
+                  <button type="button" class="text-xs text-rose-400 hover:underline" onclick="window.app.openModal('modal-forgot-password')">Esqueci minha senha</button>
+                </div>
+                <input type="password" id="login-password" class="vertice-input w-full p-3 text-sm" placeholder="Data de nascimento ou senha atual" required>
+              </div>
+
+              <button type="submit" class="btn-vertice-primary w-full py-3.5 text-sm font-semibold">
+                Entrar na Minha Conta
+              </button>
+            </form>
+
+            <!-- Acesso de DemonstraÃ§Ã£o em 1 Clique -->
+            <div class="pt-4 border-t border-white/10 space-y-2">
+              <p class="text-[11px] text-gray-400 text-center uppercase tracking-wider font-semibold">Acesso de DemonstraÃ§Ã£o (1 Clique):</p>
+              <div class="grid grid-cols-2 gap-2">
+                <button id="btn-demo-student" class="btn-vertice-secondary py-2 text-xs">
+                  ðŸ‘¤ Aluno Demo (Fidelidade)
+                </button>
+                <button id="btn-demo-admin" class="btn-vertice-secondary py-2 text-xs">
+                  âš™ï¸ Admin Master
+                </button>
+              </div>
+            </div>
+
+            <div class="text-center pt-2">
+              <p class="text-xs text-gray-400">Ainda nÃ£o Ã© aluno VÃ©rtice? <button class="text-white underline font-semibold ml-1" onclick="window.app.openModal('modal-enroll')">Matricule-se agora</button></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASO 2: SE ESTIVER LOGADO (DASHBOARD COMPLETO DO CLIENTE) -->
+      <div id="login-view-auth" class="hidden">
+        <div class="bg-surface-1 border border-vertice-subtle rounded-2xl overflow-hidden shadow-2xl">
+          <!-- Topo do Dashboard -->
+          <div class="p-6 bg-gradient-to-r from-vertice-wine to-vertice-navy border-b border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <img id="dash-client-avatar" src="" class="w-16 h-16 rounded-full object-cover border-2 border-white/30">
+              <div>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40 uppercase">Aluno Ativo</span>
+                <h2 id="dash-client-name" class="font-heading font-black text-2xl text-white mt-0.5">Nome do Aluno</h2>
+                <p id="dash-client-email" class="text-xs text-gray-300">aluno@email.com</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <button id="btn-logout" class="btn-vertice-outline px-4 py-2 text-xs text-rose-300 hover:border-rose-400">
+                Sair da Conta
+              </button>
+            </div>
+          </div>
+
+          <!-- Abas Internas -->
+          <div class="bg-surface-2 px-6 py-2.5 border-b border-white/10 flex gap-2 overflow-x-auto">
+            <button class="client-tab-btn px-4 py-2 rounded-lg text-xs font-semibold bg-vertice-wine text-white transition" data-tab="tab-perfil">
+              Perfil & Fidelidade
+            </button>
+            <button class="client-tab-btn px-4 py-2 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition" data-tab="tab-agendamentos">
+              Meus Agendamentos
+            </button>
+            <button class="client-tab-btn px-4 py-2 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition" data-tab="tab-pagamentos">
+              Pagamentos & Mensalidades
+            </button>
+            <button class="client-tab-btn px-4 py-2 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition" data-tab="tab-seguranca">
+              Alterar Senha
+            </button>
+          </div>
+
+          <!-- ConteÃºdo do Dashboard -->
+          <div class="p-6 space-y-6">
+            <!-- Aba 1: Perfil & Fidelidade -->
+            <div id="tab-perfil" class="client-tab-content space-y-6">
+              <!-- Card Fidelidade -->
+              <div class="p-6 rounded-2xl bg-gradient-fidelity border border-vertice-wine/50 space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold px-3 py-1 rounded bg-vertice-wine text-white uppercase tracking-wider">
+                    Programa Fidelidade VÃ©rtice
+                  </span>
+                  <span id="fidelity-months-counter" class="text-xs font-bold text-amber-300">
+                    8 de 12 meses concluÃ­dos
+                  </span>
+                </div>
+
+                <div>
+                  <h3 class="font-heading font-black text-xl text-white">Sua Jornada atÃ© a Mensalidade de R$ 70,00/mÃªs</h3>
+                  <div id="fidelity-status-text" class="mt-1"></div>
+                </div>
+
+                <div class="w-full bg-black/60 rounded-full h-4 p-0.5 border border-white/10 overflow-hidden">
+                  <div id="fidelity-progress-fill" class="bg-gradient-to-r from-vertice-wine to-emerald-400 h-full rounded-full transition-all duration-700" style="width: 66%;"></div>
+                </div>
+
+                <div class="flex justify-between text-[11px] text-gray-400 pt-1">
+                  <span>MÃªs 1 (R$ 220,00)</span>
+                  <span>MÃªs 6</span>
+                  <span class="text-emerald-400 font-bold">MÃªs 12 âž” R$ 70,00/mÃªs permanente</span>
+                </div>
+              </div>
+
+              <!-- Info de MatrÃ­cula -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 rounded-xl bg-surface-2 border border-white/5 space-y-2">
+                  <p class="text-xs text-gray-400">Plano Atual & Status:</p>
+                  <p id="dash-client-plan" class="font-bold text-white text-base">Plano VÃ©rtice Anual (R$ 220,00/mÃªs)</p>
+                  <span class="inline-block text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">Status: Regular / Ativo</span>
+                </div>
+                <div class="p-4 rounded-xl bg-surface-2 border border-white/5 space-y-2">
+                  <p class="text-xs text-gray-400">Academia Escolhida (Base):</p>
+                  <p id="dash-client-gym" class="font-bold text-white text-base">VÃ©rtice Paulista Prime</p>
+                  <span class="inline-block text-[11px] text-blue-300 bg-vertice-navy px-2 py-0.5 rounded">Livre acesso Ã s 89 unidades</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Aba 2: Agendamentos -->
+            <div id="tab-agendamentos" class="client-tab-content hidden space-y-4">
+              <div class="flex justify-between items-center mb-2">
+                <h3 class="text-sm font-bold text-white">Consultas MÃ©dicas & DiÃ¡rias de Personal</h3>
+                <a href="personal.html" class="text-xs text-vertice-wine font-semibold hover:underline">+ Contratar Nova DiÃ¡ria</a>
+              </div>
+              <div id="client-appointments-list" class="space-y-3"></div>
+            </div>
+
+            <!-- Aba 3: Pagamentos -->
+            <div id="tab-pagamentos" class="client-tab-content hidden space-y-4">
+              <h3 class="text-sm font-bold text-white">HistÃ³rico de CobranÃ§as & Recibos</h3>
+              <div id="client-payments-list" class="space-y-2"></div>
+            </div>
+
+            <!-- Aba 4: Alterar Senha -->
+            <div id="tab-seguranca" class="client-tab-content hidden space-y-4 max-w-md">
+              <h3 class="text-sm font-bold text-white">SeguranÃ§a da Conta</h3>
+              <p class="text-xs text-gray-400">ApÃ³s seu primeiro acesso com a data de nascimento, vocÃª pode definir uma nova senha personalizada.</p>
+              <form id="form-change-password" class="space-y-3">
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">Senha Atual:</label>
+                  <input type="password" id="change-curr-pass" class="vertice-input w-full p-2.5 text-xs" required>
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">Nova Senha:</label>
+                  <input type="password" id="change-new-pass" class="vertice-input w-full p-2.5 text-xs" required>
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-300 mb-1">Confirmar Nova Senha:</label>
+                  <input type="password" id="change-confirm-pass" class="vertice-input w-full p-2.5 text-xs" required>
+                </div>
+                <button type="submit" class="btn-vertice-primary w-full py-2.5 text-xs font-semibold">Salvar Nova Senha</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Modais -->
+  <div id="modal-forgot-password" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-fade-in">
+      <div class="p-5 bg-surface-2 border-b border-white/10 flex justify-between items-center">
+        <h3 class="font-bold text-white text-base">Recuperar Senha de Acesso</h3>
+        <button data-close-modal="modal-forgot-password" class="text-gray-400 hover:text-white">âœ•</button>
+      </div>
+      <form id="form-forgot-password" class="p-6 space-y-4">
+        <p class="text-xs text-gray-300">
+          Para restaurar seu acesso, informe seu e-mail cadastrado e sua data de nascimento.
+        </p>
+        <div>
+          <label class="block text-xs text-gray-300 mb-1">E-mail Cadastrado:</label>
+          <input type="email" id="forgot-email" class="vertice-input w-full p-2.5 text-sm" placeholder="aluno@vertice.com.br" required>
+        </div>
+        <div>
+          <label class="block text-xs text-gray-300 mb-1">Sua Data de Nascimento:</label>
+          <input type="text" id="forgot-birth" class="vertice-input w-full p-2.5 text-sm" placeholder="DD/MM/AAAA (ex: 15/08/1995)" required>
+        </div>
+        <button type="submit" class="btn-vertice-primary w-full py-3 text-xs font-semibold">
+          Restaurar Minha Senha PadrÃ£o
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-enroll" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-fade-in">
+      <div class="p-6 bg-gradient-to-r from-vertice-wine to-vertice-navy text-white flex justify-between items-center">
+        <div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-black/40 text-rose-300 uppercase">AdesÃ£o Online</span>
+          <h3 class="font-heading font-black text-xl mt-1">Matricule-se na VÃ©rtice Fitness</h3>
+        </div>
+        <button data-close-modal="modal-enroll" class="text-white/80 hover:text-white text-lg font-bold">âœ•</button>
+      </div>
+      <form id="form-register" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+        <div class="p-3 bg-black/40 border border-vertice-wine/30 rounded-xl text-xs space-y-1">
+          <p class="text-white font-bold">Plano VÃ©rtice SÃ£o Paulo (89 Unidades):</p>
+          <p class="text-emerald-400 font-bold">R$ 220,00/mÃªs no 1Âº ano âž” R$ 70,00/mÃªs apÃ³s 1 ano!</p>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-300 mb-1">Nome Completo:</label>
+          <input type="text" id="reg-name" class="vertice-input w-full p-2.5 text-sm" placeholder="Ex: Roberto Oliveira" required>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-gray-300 mb-1">E-mail Principal:</label>
+            <input type="email" id="reg-email" class="vertice-input w-full p-2.5 text-sm" placeholder="seu@email.com" required>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-300 mb-1">Data de Nascimento (Senha):</label>
+            <input type="text" id="reg-birth" class="vertice-input w-full p-2.5 text-sm" placeholder="DD/MM/AAAA" required>
+          </div>
+        </div>
+        <button type="submit" class="btn-vertice-primary w-full py-3.5 text-sm font-bold shadow-xl mt-4">Concluir MatrÃ­cula</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- RodapÃ© -->
+  <footer class="bg-black border-t border-white/10 pt-16 pb-12 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+        <div class="md:col-span-4 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-vertice-wine to-vertice-navy flex items-center justify-center font-heading font-black text-white text-lg">V</div>
+            <span class="font-heading font-extrabold text-xl text-white">VÃ‰RTICE FITNESS</span>
+          </div>
+          <p class="text-xs text-gray-400">Ãrea do Cliente com gestÃ£o de plano, fidelidade e agendamentos.</p>
+        </div>
+        <div class="md:col-span-3 space-y-3">
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider">PÃ¡ginas</h4>
+          <ul class="space-y-2 text-xs text-gray-400">
+            <li><a href="index.html" class="hover:text-white transition">InÃ­cio</a></li>
+            <li><a href="academias.html" class="hover:text-white transition">Academias (89 Unidades)</a></li>
+            <li><a href="planos.html" class="hover:text-white transition">Planos e Fidelidade</a></li>
+            <li><a href="exercicios.html" class="hover:text-white transition">Tutoriais de ExercÃ­cios</a></li>
+            <li><a href="personal.html" class="hover:text-white transition">Personal Trainer</a></li>
+            <li><a href="avaliacao-medica.html" class="hover:text-white transition">AvaliaÃ§Ã£o MÃ©dica Gratuita</a></li>
+            <li><a href="login.html" class="text-white font-semibold">Ãrea do Aluno / Login</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="text-xs text-gray-500 pt-6">Â© 2026 VÃ©rtice Fitness Brasil Ltda. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+    <script src="js/database-standalone.js"></script>
+  <script src="js/app-standalone.js"></script>
+</body>
+</html>
+

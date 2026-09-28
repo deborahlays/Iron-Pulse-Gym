@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VÉRTICE FITNESS | 89 Academias em São Paulo | Seu treino. Sua evolução. Seu Vértice.</title>
+  <meta name="description" content="Rede de academias premium em São Paulo com 89 unidades. Musculação high-tech, personal trainer sob demanda, tutoriais de exercícios, avaliação médica gratuita e aceita TotalPass.">
+<link rel="manifest" href="manifest.json">
+
+  <!-- Google Fonts: Montserrat (Headings) & Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN com Configuração Customizada das Cores Oficiais -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            vertice: {
+              wine: '#7A1630',
+              'wine-dark': '#520F20',
+              'wine-light': '#9B1D3D',
+              black: '#0B0B0D',
+              navy: '#101C35',
+              'navy-dark': '#0A1122',
+              'navy-light': '#1A2E56',
+            },
+            surface: {
+              1: '#111115',
+              2: '#16171E',
+              3: '#1E202B'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Montserrat', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Leaflet CSS para Mapas Interativos em Dark Mode -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <!-- Folha de Estilos Customizada Vértice -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-vertice-black text-gray-100 antialiased selection:bg-vertice-wine selection:text-white flex flex-col min-h-screen">
+
+  <!-- =========================================================================
+       1. MENU PRINCIPAL FIXO NO TOPO (SISTEMA DE ABAS DEDICADAS)
+       ========================================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 nav-glass transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo Vértice Fitness (leva para a aba Início) -->
+        <button onclick="window.app.switchView('inicio')" class="flex items-center gap-3 group text-left">
+          <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-vertice-wine to-vertice-navy flex items-center justify-center shadow-lg shadow-vertice-wine/30 group-hover:scale-105 transition">
+            <span class="font-heading font-black text-xl text-white">V</span>
+          </div>
+          <div class="flex flex-col">
+            <span class="font-heading font-extrabold text-xl tracking-wider text-white flex items-center gap-1">
+              VÉRTICE <span class="text-xs font-semibold px-1.5 py-0.5 rounded bg-vertice-wine text-white">FITNESS</span>
+            </span>
+            <span class="text-[10px] text-gray-400 tracking-widest uppercase">89 Unidades em SP</span>
+          </div>
+        </button>
+
+        <!-- Navegação por Abas Desktop (Muda de tela sem rolar a página toda) -->
+        <nav class="hidden lg:flex items-center gap-1.5 text-sm font-medium">
+          <button data-nav-view="inicio" onclick="window.app.switchView('inicio')" class="nav-view-btn px-3.5 py-2 rounded-lg transition bg-vertice-wine text-white font-semibold">
+            Início
+          </button>
+          <button data-nav-view="academias" onclick="window.app.switchView('academias')" class="nav-view-btn px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Academias
+          </button>
+          <button data-nav-view="planos" onclick="window.app.switchView('planos')" class="nav-view-btn px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Planos
+          </button>
+          <button data-nav-view="exercicios" onclick="window.app.switchView('exercicios')" class="nav-view-btn px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Exercícios
+          </button>
+          <button data-nav-view="personal" onclick="window.app.switchView('personal')" class="nav-view-btn px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5">
+            Personal
+          </button>
+          <button data-nav-view="avaliacao-medica" onclick="window.app.switchView('avaliacao-medica')" class="nav-view-btn px-3.5 py-2 rounded-lg transition text-gray-300 hover:text-white hover:bg-white/5 flex items-center gap-1.5">
+            <span>Avaliação Médica</span>
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/40">GRÁTIS</span>
+          </button>
+        </nav>
+
+        <!-- Ações do Topo: Auth Container & Botão de Matrícula -->
+        <div id="nav-auth-container" class="hidden md:flex items-center gap-3">
+          <!-- Renderizado via app.js -->
+        </div>
+
+        <!-- Botão Menu Mobile -->
+        <button id="btn-mobile-menu" class="lg:hidden p-2 rounded-lg bg-surface-2 text-gray-300 hover:text-white focus:outline-none" aria-label="Abrir menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Gaveta de Menu Mobile com Navegação por Abas -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-vertice-black/95 border-b border-white/10 px-4 pt-2 pb-6 space-y-2">
+      <button onclick="window.app.switchView('inicio')" class="nav-view-btn block w-full text-left py-2 px-3 rounded-lg text-sm font-semibold bg-vertice-wine text-white" data-nav-view="inicio">Início</button>
+      <button onclick="window.app.switchView('academias')" class="nav-view-btn block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5" data-nav-view="academias">Academias (89 Unidades)</button>
+      <button onclick="window.app.switchView('planos')" class="nav-view-btn block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5" data-nav-view="planos">Planos & Fidelidade</button>
+      <button onclick="window.app.switchView('exercicios')" class="nav-view-btn block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5" data-nav-view="exercicios">Tutoriais de Exercícios</button>
+      <button onclick="window.app.switchView('personal')" class="nav-view-btn block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5" data-nav-view="personal">Personal Trainer</button>
+      <button onclick="window.app.switchView('avaliacao-medica')" class="nav-view-btn block w-full text-left py-2 px-3 rounded-lg text-sm font-medium text-emerald-400 hover:bg-white/5 flex items-center justify-between" data-nav-view="avaliacao-medica">
+        <span>Avaliação Médica</span>
+        <span class="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-1.5 py-0.5 rounded border border-emerald-500/40">GRÁTIS</span>
+      </button>
+      <div id="mobile-nav-auth-container" class="pt-3 border-t border-white/10 flex flex-col gap-2">
+        <!-- Renderizado dinamicamente -->
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       CONTAINER PRINCIPAL DAS PÁGINAS/ABAS INDEPENDENTES
+       ========================================================================= -->
+  <main class="flex-1">
+
+    <!-- =======================================================================
+         ABA 1: INÍCIO (HERO & DESTAQUES)
+         ======================================================================= -->
+    <div id="view-inicio" class="page-view animate-fade-in">
+      <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-hero">
+        <div class="absolute -top-32 -left-32 w-96 h-96 bg-vertice-wine/25 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute top-1/2 -right-32 w-96 h-96 bg-vertice-navy/40 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Coluna de Texto Principal -->
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                <span class="text-xs font-semibold uppercase tracking-wider text-rose-300">Maior Rede Premium de SP</span>
+                <span class="text-gray-500">•</span>
+                <span class="text-xs text-gray-300 font-medium">Aceita TotalPass</span>
+              </div>
+
+              <h1 class="font-heading text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
+                Seu treino.<br>
+                Sua evolução.<br>
+                <span class="text-gradient-vertice">Seu Vértice.</span>
+              </h1>
+
+              <p class="text-lg sm:text-xl text-gray-300 max-w-2xl font-light">
+                89 academias em São Paulo para você treinar onde quiser. Alta performance, estrutura biomecânica e acompanhamento profissional.
+              </p>
+
+              <!-- Botões Hero que mudam diretamente para as abas específicas -->
+              <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                <button onclick="window.app.switchView('academias')" class="btn-vertice-primary w-full sm:w-auto px-8 py-4 text-base font-semibold shadow-lg">
+                  Encontrar academia
+                </button>
+                <button onclick="window.app.switchView('planos')" class="btn-vertice-secondary w-full sm:w-auto px-8 py-4 text-base font-semibold">
+                  Conhecer planos
+                </button>
+              </div>
+
+              <!-- Números de Destaque Solicitados -->
+              <div class="pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center lg:text-left">
+                <div class="cursor-pointer hover:opacity-80 transition" onclick="window.app.switchView('academias')">
+                  <span class="block font-heading font-black text-3xl text-white">89</span>
+                  <span class="text-xs text-gray-400 font-medium uppercase tracking-wider">Unidades</span>
+                </div>
+                <div class="cursor-pointer hover:opacity-80 transition" onclick="window.app.switchView('academias')">
+                  <span class="block font-heading font-black text-3xl text-rose-400">São Paulo</span>
+                  <span class="text-xs text-gray-400 font-medium uppercase tracking-wider">Capital & Interior</span>
+                </div>
+                <div class="cursor-pointer hover:opacity-80 transition" onclick="window.app.switchView('personal')">
+                  <span class="block font-heading font-black text-3xl text-blue-400">Personal</span>
+                  <span class="text-xs text-gray-400 font-medium uppercase tracking-wider">Trainers Sob Demanda</span>
+                </div>
+                <div class="cursor-pointer hover:opacity-80 transition" onclick="window.app.switchView('avaliacao-medica')">
+                  <span class="block font-heading font-black text-3xl text-emerald-400">100% Grátis</span>
+                  <span class="text-xs text-gray-400 font-medium uppercase tracking-wider">Avaliação Médica</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Coluna de Imagem / Destaque -->
+            <div class="lg:col-span-5 relative">
+              <div class="relative mx-auto max-w-md lg:max-w-none">
+                <div class="absolute -inset-1 rounded-2xl bg-gradient-to-r from-vertice-wine to-vertice-navy opacity-40 blur-lg"></div>
+                <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-surface-1">
+                  <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=1000&auto=format&fit=crop&q=80" alt="Academia Vértice Fitness" class="w-full h-[420px] object-cover">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+                  
+                  <div class="absolute bottom-4 left-4 right-4 p-4 rounded-xl bg-black/80 backdrop-blur-md border border-white/15 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-lg bg-black border border-white/30 flex items-center justify-center font-bold text-white text-xs">
+                        TP
+                      </div>
+                      <div>
+                        <p class="text-xs font-bold text-white">Aceita TotalPass Oficial</p>
+                        <p class="text-[11px] text-gray-400">Check-in direto pelo app</p>
+                      </div>
+                    </div>
+                    <button onclick="window.app.openModal('modal-totalpass')" class="text-xs font-bold text-vertice-wine bg-white px-3 py-1.5 rounded-lg hover:bg-gray-100 transition">
+                      Como usar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção Resumo Rápido para Navegar nas Outras Abas -->
+      <section class="py-16 bg-surface-1 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Tudo em um só lugar</span>
+            <h2 class="font-heading text-2xl sm:text-3xl font-black text-white mt-1">Conheça o Ecossistema Vértice</h2>
+            <p class="text-xs text-gray-400 mt-2">Clique em qualquer módulo para acessar a aba correspondente.</p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div onclick="window.app.switchView('academias')" class="card-vertice p-6 cursor-pointer group">
+              <span class="w-10 h-10 rounded-lg bg-vertice-navy text-blue-300 flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-110 transition">📍</span>
+              <h3 class="font-bold text-white text-base group-hover:text-rose-300 transition">89 Academias</h3>
+              <p class="text-xs text-gray-400 mt-2">Encontre unidades na capital, Grande SP, interior e litoral com mapa interativo.</p>
+              <span class="text-xs text-vertice-wine font-semibold mt-4 block">Abrir Academias →</span>
+            </div>
+
+            <div onclick="window.app.switchView('planos')" class="card-vertice p-6 cursor-pointer group">
+              <span class="w-10 h-10 rounded-lg bg-emerald-950 text-emerald-400 flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-110 transition">💎</span>
+              <h3 class="font-bold text-white text-base group-hover:text-rose-300 transition">Fidelidade R$ 70/mês</h3>
+              <p class="text-xs text-gray-400 mt-2">1º ano a R$ 220/mês e nos anos seguintes apenas R$ 70/mês garantido.</p>
+              <span class="text-xs text-vertice-wine font-semibold mt-4 block">Ver Planos →</span>
+            </div>
+
+            <div onclick="window.app.switchView('exercicios')" class="card-vertice p-6 cursor-pointer group">
+              <span class="w-10 h-10 rounded-lg bg-amber-950 text-amber-400 flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-110 transition">📖</span>
+              <h3 class="font-bold text-white text-base group-hover:text-rose-300 transition">Tutoriais de Treino</h3>
+              <p class="text-xs text-gray-400 mt-2">Aprenda a biomecânica e postura correta em 9 grupos musculares completos.</p>
+              <span class="text-xs text-vertice-wine font-semibold mt-4 block">Ver Exercícios →</span>
+            </div>
+
+            <div onclick="window.app.switchView('personal')" class="card-vertice p-6 cursor-pointer group">
+              <span class="w-10 h-10 rounded-lg bg-vertice-wine text-white flex items-center justify-center font-bold text-lg mb-4 group-hover:scale-110 transition">⚡</span>
+              <h3 class="font-bold text-white text-base group-hover:text-rose-300 transition">Diária de Personal</h3>
+              <p class="text-xs text-gray-400 mt-2">Contrate personais de alta performance na academia mais conveniente para ambos.</p>
+              <span class="text-xs text-vertice-wine font-semibold mt-4 block">Contratar Personal →</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =======================================================================
+         ABA 2: ACADEMIAS (89 UNIDADES EM SÃO PAULO)
+         ======================================================================= -->
+    <div id="view-academias" class="page-view hidden animate-fade-in">
+      <section class="pt-28 pb-20 bg-vertice-black min-h-[85vh]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Localize a unidade ideal</span>
+              <h2 class="font-heading text-3xl sm:text-4xl font-black text-white mt-1">
+                Encontre a Vértice mais perto de você
+              </h2>
+              <p class="text-sm text-gray-400 mt-2 max-w-2xl">
+                Com 89 academias espalhadas pela capital, Grande São Paulo, interior e litoral, há sempre uma Vértice pronta para o seu treino.
+              </p>
+            </div>
+
+            <!-- Seletor de Modo de Visualização (Lista / Mapa) -->
+            <div class="mt-4 md:mt-0 flex items-center gap-2 bg-surface-2 p-1.5 rounded-xl border border-white/10">
+              <button id="btn-view-list" class="px-4 py-2 rounded-lg text-xs font-semibold bg-vertice-wine text-white transition flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+                Cards
+              </button>
+              <button id="btn-view-map" class="px-4 py-2 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
+                Mapa Interativo
+              </button>
+            </div>
+          </div>
+
+          <!-- Barra de Filtros e Busca de Academias -->
+          <div class="bg-surface-1 p-4 rounded-xl border border-vertice-subtle mb-8 grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+            <!-- Campo de Busca por Endereço / CEP / Nome -->
+            <div class="sm:col-span-5 relative">
+              <input type="text" id="gym-search-input" placeholder="Buscar por bairro, endereço ou CEP..." class="vertice-input w-full pl-10 pr-4 py-2.5 text-sm">
+              <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+
+            <!-- Seletor de Região de SP -->
+            <div class="sm:col-span-4">
+              <select id="gym-region-filter" class="vertice-input w-full py-2.5 px-3 text-sm">
+                <option value="Todas">Todas as Regiões (89 Unidades)</option>
+                <option value="Capital - Centro/Paulista">Capital - Centro & Paulista</option>
+                <option value="Capital - Zona Sul">Capital - Zona Sul</option>
+                <option value="Capital - Zona Oeste">Capital - Zona Oeste</option>
+                <option value="Capital - Zona Leste">Capital - Zona Leste</option>
+                <option value="Capital - Zona Norte">Capital - Zona Norte</option>
+                <option value="Grande SP - ABC">Grande SP - ABC Paulista</option>
+                <option value="Grande SP - Oeste/Norte">Grande SP - Alphaville & Osasco</option>
+                <option value="Interior de SP">Interior de São Paulo</option>
+                <option value="Litoral Paulista">Litoral Paulista</option>
+              </select>
+            </div>
+
+            <!-- Botão Usar Minha Localização -->
+            <div class="sm:col-span-3">
+              <button id="btn-use-geolocation" class="btn-vertice-secondary w-full py-2.5 px-3 text-xs flex items-center justify-center gap-2">
+                <svg class="w-4 h-4 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                Permitir Localização
+              </button>
+            </div>
+          </div>
+
+          <!-- Badge de Contagem -->
+          <div class="flex items-center justify-between text-xs text-gray-400 mb-4 px-1">
+            <span id="gyms-count-badge">89 unidades cadastradas</span>
+            <span>Acesso total à rede com seu plano</span>
+          </div>
+
+          <!-- Visualização em Cards (Padrão) -->
+          <div id="gyms-list-view" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="gyms-cards-container" class="contents">
+              <!-- Renderizado via app.js -->
+            </div>
+          </div>
+
+          <!-- Visualização em Mapa Interativo -->
+          <div id="gyms-map-view" class="hidden">
+            <div class="card-vertice p-2 overflow-hidden">
+              <div id="map" class="w-full h-[550px] rounded-lg"></div>
+            </div>
+            <p class="text-xs text-gray-400 mt-2 text-center">Clique em qualquer marcador para ver horários, estrutura e trajeto até a academia.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =======================================================================
+         ABA 3: PLANOS & FIDELIDADE (R$ 70/MÊS)
+         ======================================================================= -->
+    <div id="view-planos" class="page-view hidden animate-fade-in">
+      <section class="pt-28 pb-20 bg-gradient-to-b from-vertice-black via-surface-1 to-vertice-black min-h-[85vh]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-14">
+            <span class="text-xs font-bold uppercase tracking-widest text-vertice-wine">Transparência Total</span>
+            <h2 class="font-heading text-3xl sm:text-5xl font-black text-white mt-2">
+              Planos Vértice Fitness
+            </h2>
+            <p class="text-base text-gray-300 mt-3 font-light">
+              Treine em todas as 89 academias com uma política de mensalidade clara e a fidelidade mais vantajosa do Brasil.
+            </p>
+          </div>
+
+          <!-- Grade dos Planos -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-16">
+            <!-- Card 1: Mensalidade Normal -->
+            <div class="lg:col-span-5 card-vertice p-8 flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-center mb-4">
+                  <span class="text-xs font-bold px-3 py-1 rounded bg-white/10 text-gray-200 uppercase tracking-wider">Adesão Regular</span>
+                  <span class="text-xs text-gray-400">1º Ano</span>
+                </div>
+                <h3 class="font-heading text-2xl font-bold text-white">Plano Vértice São Paulo</h3>
+                <p class="text-xs text-gray-400 mt-1">Acesso irrestrito a todas as 89 unidades do estado de SP.</p>
+
+                <div class="my-6 p-4 rounded-xl bg-black/40 border border-white/10">
+                  <span class="text-xs text-gray-400 block font-medium">Mensalidade normal</span>
+                  <div class="flex items-baseline gap-1 mt-1">
+                    <span class="text-4xl font-extrabold text-white">R$ 220,00</span>
+                    <span class="text-sm text-gray-400 font-medium">/mês</span>
+                  </div>
+                </div>
+
+                <ul class="space-y-3 text-xs text-gray-300 mb-6">
+                  <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Treine em qualquer uma das 89 unidades</li>
+                  <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Avaliação médica gratuita inclusa</li>
+                  <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Acesso completo aos tutoriais biomecânicos</li>
+                  <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Possibilidade de contratar diárias de Personal</li>
+                  <li class="flex items-center gap-2"><span class="text-emerald-400 font-bold">✓</span> Contabiliza tempo para o Programa de Fidelidade</li>
+                </ul>
+              </div>
+
+              <button class="btn-vertice-secondary w-full py-3.5 text-sm font-semibold" onclick="window.app.openModal('modal-enroll')">
+                Matricular-se no Plano Regular
+              </button>
+            </div>
+
+            <!-- Card 2: Destaque Especial PROGRAMA DE FIDELIDADE VÉRTICE -->
+            <div class="lg:col-span-7 card-vertice p-8 bg-gradient-fidelity border-2 border-vertice-wine/70 relative overflow-hidden flex flex-col justify-between shadow-2xl">
+              <div class="absolute -right-16 -top-16 w-48 h-48 bg-vertice-wine/30 rounded-full blur-2xl pointer-events-none"></div>
+
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-xs font-black px-3.5 py-1 rounded bg-vertice-wine text-white uppercase tracking-widest shadow-md">
+                    ★ PROGRAMA EXCLUSIVO
+                  </span>
+                  <span class="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                    <span>Economia Garantida</span>
+                  </span>
+                </div>
+
+                <h3 class="font-heading text-3xl font-black text-white">
+                  Fidelidade Vértice
+                </h3>
+                <p class="text-sm text-rose-200 mt-2 font-medium">
+                  "Treine com a Vértice por 1 ano e tenha uma condição especial nos anos seguintes."
+                </p>
+
+                <div class="my-6 p-5 rounded-xl bg-black/60 border border-vertice-wine/50 space-y-4">
+                  <p class="text-xs text-gray-300 leading-relaxed">
+                    Regra: Após completar <strong>1 ano utilizando a rede Vértice Fitness</strong>, você passa a pagar apenas:
+                  </p>
+
+                  <div class="flex items-baseline gap-2">
+                    <span class="text-5xl font-black text-emerald-400 tracking-tight">R$ 70,00</span>
+                    <span class="text-base text-gray-300 font-medium">/mês nos anos seguintes</span>
+                  </div>
+                  <p class="text-[11px] text-gray-400">
+                    Condição permanente enquanto você mantiver sua matrícula ativa na rede Vértice Fitness.
+                  </p>
+                </div>
+
+                <!-- Linha do Tempo Visual Solicitada -->
+                <div class="pt-2">
+                  <h4 class="text-xs font-bold uppercase tracking-wider text-gray-300 mb-3">Linha do Tempo de Evolução:</h4>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-3.5 rounded-lg bg-surface-2 border border-white/10 text-center">
+                      <span class="text-xs text-gray-400 block font-medium">1º Ano Completo</span>
+                      <span class="text-xl font-bold text-white mt-1 block">R$ 220,00 /mês</span>
+                      <span class="text-[11px] text-gray-400 block">Investimento no seu hábito e evolução</span>
+                    </div>
+                    <div class="p-3.5 rounded-lg bg-emerald-950/40 border border-emerald-500/50 text-center">
+                      <span class="text-xs text-emerald-400 block font-bold">Após 1 Ano de Rede</span>
+                      <span class="text-xl font-black text-emerald-300 mt-1 block">R$ 70,00 /mês</span>
+                      <span class="text-[11px] text-emerald-400/90 block">Economize R$ 1.800,00 por ano</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-8 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center gap-4">
+                <button class="btn-vertice-primary w-full py-4 text-sm font-bold flex-1" onclick="window.app.openModal('modal-enroll')">
+                  Começar Agora e Ativar Fidelidade
+                </button>
+                <button class="btn-vertice-outline w-full sm:w-auto px-5 py-4 text-xs font-semibold" onclick="window.app.openModal('modal-auth')">
+                  Já sou Aluno (Ver Meu Progresso)
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TotalPass Banner Integrado -->
+          <div class="card-vertice p-8 md:p-10 bg-gradient-to-r from-black via-surface-2 to-vertice-navy/40 border border-vertice-subtle flex flex-col md:flex-row items-center justify-between gap-6 mb-16">
+            <div class="flex items-center gap-5">
+              <div class="w-16 h-16 rounded-2xl bg-black border-2 border-white/20 flex items-center justify-center font-black text-2xl text-white shadow-xl flex-shrink-0">
+                TP
+              </div>
+              <div>
+                <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded bg-white/10 text-[11px] font-semibold text-gray-300 uppercase mb-1">
+                  Benefício Corporativo Oficial
+                </div>
+                <h3 class="font-heading text-2xl sm:text-3xl font-black text-white">
+                  A Vértice Fitness aceita TotalPass.
+                </h3>
+                <p class="text-sm text-gray-400 mt-1 max-w-xl">
+                  Utilize o seu benefício corporativo para treinar com liberdade em qualquer uma das nossas 89 academias no estado de São Paulo.
+                </p>
+              </div>
+            </div>
+
+            <button onclick="window.app.openModal('modal-totalpass')" class="btn-vertice-primary px-8 py-3.5 text-sm font-semibold whitespace-nowrap shadow-lg">
+              Saiba como utilizar seu TotalPass
+            </button>
+          </div>
+
+          <!-- SEÇÃO OFERTAS VÉRTICE (PROMOÇÕES) -->
+          <div class="pt-4">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Condições Especiais</span>
+                <h3 class="font-heading text-2xl font-bold text-white">Ofertas Vértice</h3>
+              </div>
+              <span class="text-xs text-gray-400 hidden sm:inline">Não alteram a regra de fidelidade de R$ 70,00</span>
+            </div>
+
+            <div id="promotions-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <!-- Renderizado via app.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =======================================================================
+         ABA 4: TUTORIAIS DE EXERCÍCIOS ("APRENDA A TREINAR")
+         ======================================================================= -->
+    <div id="view-exercicios" class="page-view hidden animate-fade-in">
+      <section class="pt-28 pb-20 bg-surface-1 min-h-[85vh]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Biomecânica & Técnica</span>
+              <h2 class="font-heading text-3xl sm:text-4xl font-black text-white mt-1">
+                Aprenda a treinar
+              </h2>
+              <p class="text-sm text-gray-400 mt-2 max-w-2xl">
+                Encontre tutoriais passo a passo dos aparelhos e exercícios disponíveis nas academias da rede Vértice. Postura correta, ajustes e prevenção de lesões.
+              </p>
+            </div>
+
+            <!-- Busca de Exercício -->
+            <div class="mt-4 md:mt-0 w-full md:w-72">
+              <input type="text" id="exercise-search-input" placeholder="Buscar exercício ou máquina..." class="vertice-input w-full py-2 px-3 text-xs" oninput="window.app.renderExercises()">
+            </div>
+          </div>
+
+          <!-- Abas de Categorias Solicitadas (Peito, Costas, Pernas, Ombros, Bíceps, Tríceps, Abdômen, Cardio, Glúteos) -->
+          <div id="exercise-category-tabs" class="flex gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
+            <!-- Renderizado dinamicamente via app.js -->
+          </div>
+
+          <!-- Grade dos Exercícios -->
+          <div id="exercises-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Renderizado via app.js -->
+          </div>
+
+          <!-- Aviso Obrigatório Educativo -->
+          <div class="mt-12 p-4 bg-black/40 border border-vertice-subtle rounded-xl text-center max-w-2xl mx-auto">
+            <p class="text-xs text-gray-400">
+              ⚠️ <strong class="text-gray-300">Aviso importante:</strong> Os tutoriais são educativos. Em caso de dúvida, procure um profissional qualificado nas unidades Vértice.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =======================================================================
+         ABA 5: PERSONAL TRAINER ("ENCONTRE SEU PERSONAL")
+         ======================================================================= -->
+    <div id="view-personal" class="page-view hidden animate-fade-in">
+      <section class="pt-28 pb-20 bg-vertice-black min-h-[85vh]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center max-w-3xl mx-auto mb-14">
+            <span class="text-xs font-bold uppercase tracking-widest text-vertice-wine">Atendimento Exclusivo</span>
+            <h2 class="font-heading text-3xl sm:text-4xl font-black text-white mt-1">
+              Encontre seu Personal
+            </h2>
+            <p class="text-sm text-gray-300 mt-2 font-light">
+              Contrate um Personal Trainer credenciado para uma diária de treinamento. Escolha o dia, horário e a melhor academia próxima tanto de você quanto do profissional.
+            </p>
+          </div>
+
+          <!-- Fluxo Explicativo em 4 Passos Rápidos -->
+          <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-12">
+            <div class="p-4 rounded-xl bg-surface-2 border border-white/5 text-center">
+              <span class="w-8 h-8 rounded-full bg-vertice-wine text-white font-bold text-xs flex items-center justify-center mx-auto mb-2">1</span>
+              <h4 class="text-xs font-bold text-white">Escolha o Dia & Hora</h4>
+              <p class="text-[11px] text-gray-400 mt-1">Selecione sua disponibilidade de agenda.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-surface-2 border border-white/5 text-center">
+              <span class="w-8 h-8 rounded-full bg-vertice-wine text-white font-bold text-xs flex items-center justify-center mx-auto mb-2">2</span>
+              <h4 class="text-xs font-bold text-white">Sua Localização</h4>
+              <p class="text-[11px] text-gray-400 mt-1">O sistema identifica os personais disponíveis.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-surface-2 border border-white/5 text-center">
+              <span class="w-8 h-8 rounded-full bg-vertice-wine text-white font-bold text-xs flex items-center justify-center mx-auto mb-2">3</span>
+              <h4 class="text-xs font-bold text-white">Academia Ideal</h4>
+              <p class="text-[11px] text-gray-400 mt-1">Identifica a unidade conveniente para ambos.</p>
+            </div>
+            <div class="p-4 rounded-xl bg-surface-2 border border-white/5 text-center">
+              <span class="w-8 h-8 rounded-full bg-vertice-wine text-white font-bold text-xs flex items-center justify-center mx-auto mb-2">4</span>
+              <h4 class="text-xs font-bold text-white">Confirme a Diária</h4>
+              <p class="text-[11px] text-gray-400 mt-1">Treino 100% focado na sua meta pessoal.</p>
+            </div>
+          </div>
+
+          <!-- Grade de Personais Cadastrados -->
+          <div id="personals-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Renderizado via app.js -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =======================================================================
+         ABA 6: AVALIAÇÃO MÉDICA GRATUITA
+         ======================================================================= -->
+    <div id="view-avaliacao-medica" class="page-view hidden animate-fade-in">
+      <section class="pt-28 pb-20 bg-gradient-to-b from-surface-1 to-vertice-black min-h-[85vh]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="card-vertice p-8 md:p-12 border-vertice-wine/40 relative overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+              <!-- Coluna Informativa -->
+              <div class="lg:col-span-6 space-y-4">
+                <span class="text-xs font-bold px-3 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/40 uppercase tracking-widest">
+                  Segurança & Saúde em Primeiro Lugar
+                </span>
+                <h2 class="font-heading text-3xl sm:text-4xl font-black text-white">
+                  Avaliação médica gratuita
+                </h2>
+                <p class="text-lg text-rose-200 font-medium">
+                  "Comece seus treinos com mais segurança."
+                </p>
+                <p class="text-xs text-gray-300 leading-relaxed font-light">
+                  Na Vértice Fitness, cada aluno tem direito a realizar uma consulta de avaliação médica completa sem nenhum custo adicional. Nossos especialistas analisam sua composição corporal, histórico cardiovascular e mobilidade funcional.
+                </p>
+
+                <div class="p-4 rounded-xl bg-black/50 border border-white/10 flex items-center justify-between">
+                  <div>
+                    <span class="text-xs text-gray-400 block font-medium">Investimento da Consulta:</span>
+                    <span class="text-2xl font-black text-emerald-400">GRATUITA</span>
+                  </div>
+                  <span class="text-xs text-gray-400">Em qualquer uma das 89 unidades</span>
+                </div>
+              </div>
+
+              <!-- Coluna Formulário de Agendamento Online -->
+              <div class="lg:col-span-6 bg-surface-2 p-6 rounded-2xl border border-white/10">
+                <h3 class="text-lg font-bold text-white mb-4">Agendar Minha Consulta Grátis</h3>
+                <form id="form-medical-booking" class="space-y-4">
+                  <div>
+                    <label class="block text-xs font-medium text-gray-300 mb-1">Escolha a Unidade:</label>
+                    <select id="med-gym-select" class="vertice-input w-full p-2.5 text-xs">
+                      <!-- Populado dinamicamente com as 89 academias -->
+                    </select>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-xs font-medium text-gray-300 mb-1">Data Desejada:</label>
+                      <input type="date" id="med-date" class="vertice-input w-full p-2.5 text-xs" required>
+                    </div>
+                    <div>
+                      <label class="block text-xs font-medium text-gray-300 mb-1">Horário:</label>
+                      <select id="med-time" class="vertice-input w-full p-2.5 text-xs" required>
+                        <option value="08:00">08:00</option>
+                        <option value="09:00">09:00</option>
+                        <option value="10:00">10:00</option>
+                        <option value="11:00">11:00</option>
+                        <option value="14:00">14:00</option>
+                        <option value="15:00">15:00</option>
+                        <option value="16:00">16:00</option>
+                        <option value="17:00">17:00</option>
+                        <option value="18:30">18:30</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="btn-vertice-primary w-full py-3.5 text-xs font-semibold mt-2">
+                    Confirmar Agendamento Gratuito
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       RODAPÉ COMPLETO
+       ========================================================================= -->
+  <footer class="bg-black border-t border-white/10 pt-16 pb-12 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+        <!-- Coluna Institucional -->
+        <div class="md:col-span-4 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-vertice-wine to-vertice-navy flex items-center justify-center font-heading font-black text-white text-lg">
+              V
+            </div>
+            <span class="font-heading font-extrabold text-xl text-white">VÉRTICE FITNESS</span>
+          </div>
+          <p class="text-sm font-medium text-rose-300 italic">
+            "Seu treino. Sua evolução. Seu Vértice."
+          </p>
+          <p class="text-xs text-gray-400 font-light leading-relaxed">
+            A rede de academias mais completa do estado de São Paulo. Tecnologia de ponta, 89 unidades, tutoriais de exercícios, personal trainer e programa de fidelidade exclusivo.
+          </p>
+          <div class="pt-2">
+            <span class="inline-flex items-center gap-2 text-xs font-bold text-gray-300 bg-surface-2 px-3 py-1.5 rounded-lg border border-white/10">
+              📍 89 academias em São Paulo
+            </span>
+          </div>
+        </div>
+
+        <!-- Links de Navegação por Abas -->
+        <div class="md:col-span-3 space-y-3">
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider">Navegação Rápida</h4>
+          <ul class="space-y-2 text-xs text-gray-400">
+            <li><button onclick="window.app.switchView('academias')" class="hover:text-white transition">Academias (89 Unidades)</button></li>
+            <li><button onclick="window.app.switchView('planos')" class="hover:text-white transition">Planos e Mensalidade</button></li>
+            <li><button onclick="window.app.switchView('exercicios')" class="hover:text-white transition">Tutoriais de Exercícios</button></li>
+            <li><button onclick="window.app.switchView('personal')" class="hover:text-white transition">Personal Trainer</button></li>
+            <li><button onclick="window.app.switchView('avaliacao-medica')" class="hover:text-white transition">Avaliação Médica Gratuita</button></li>
+            <li><button onclick="window.app.openModal('modal-auth')" class="hover:text-white transition">Login do Aluno</button></li>
+          </ul>
+        </div>
+
+        <!-- TotalPass & Institucional -->
+        <div class="md:col-span-3 space-y-3">
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider">Parcerias & Termos</h4>
+          <ul class="space-y-2 text-xs text-gray-400">
+            <li><button onclick="window.app.openModal('modal-totalpass')" class="hover:text-white transition text-left">Como Usar TotalPass</button></li>
+            <li><button onclick="window.app.switchView('planos')" class="hover:text-white transition">Regra de Fidelidade (R$ 70/mês)</button></li>
+            <li><button onclick="window.app.openModal('modal-terms')" class="hover:text-white transition">Termos de Uso</button></li>
+            <li><button onclick="window.app.openModal('modal-privacy')" class="hover:text-white transition">Política de Privacidade</button></li>
+            <li><button onclick="window.app.openModal('modal-admin-dashboard')" class="text-gray-500 hover:text-gray-300 transition text-[11px]">Acesso Administrativo</button></li>
+          </ul>
+        </div>
+
+        <!-- Redes Sociais & Contato -->
+        <div class="md:col-span-2 space-y-3">
+          <h4 class="text-xs font-bold text-white uppercase tracking-wider">Conecte-se</h4>
+          <div class="flex gap-2">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-surface-2 border border-white/10 flex items-center justify-center text-gray-300 hover:text-white hover:bg-vertice-wine transition text-xs font-bold" title="Instagram">
+              IG
+            </a>
+            <a href="https://facebook.com" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-surface-2 border border-white/10 flex items-center justify-center text-gray-300 hover:text-white hover:bg-vertice-wine transition text-xs font-bold" title="Facebook">
+              FB
+            </a>
+            <a href="https://youtube.com" target="_blank" rel="noopener" class="w-8 h-8 rounded-lg bg-surface-2 border border-white/10 flex items-center justify-center text-gray-300 hover:text-white hover:bg-vertice-wine transition text-xs font-bold" title="YouTube">
+              YT
+            </a>
+          </div>
+          <p class="text-[11px] text-gray-500 mt-2">
+            Central de Atendimento:<br>
+            <strong class="text-gray-300">0800 890 0089</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+        <p>© 2026 Vértice Fitness Brasil Ltda. Todos os direitos reservados. CNPJ: 00.890.123/0001-89.</p>
+        <p>Desenvolvido para rede de 89 academias no Estado de São Paulo.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MODAIS DO SISTEMA
+       ========================================================================= -->
+
+  <!-- Modal 1: Login & Autenticação (Senha = Data de Nascimento) -->
+  <div id="modal-auth" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-fade-in">
+      <div class="p-6 bg-gradient-to-r from-vertice-wine to-vertice-navy flex justify-between items-center text-white">
+        <div>
+          <h3 class="font-heading font-bold text-lg">Área do Cliente Vértice</h3>
+          <p class="text-xs text-rose-200">Acesse sua conta e gerencie seus treinos</p>
+        </div>
+        <button data-close-modal="modal-auth" class="text-white/80 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <!-- Destaque Informativo sobre a Senha Inicial -->
+        <div class="p-3 bg-vertice-navy/60 border border-blue-900/60 rounded-xl text-xs space-y-1">
+          <p class="font-bold text-blue-300">📌 Importante para o Primeiro Acesso:</p>
+          <p class="text-gray-300">Sua senha inicial é sua <strong>data de nascimento</strong> (sem barras). Exemplo: Nascido em 15/08/1995 ➔ Senha: <span class="font-mono text-amber-300 font-bold">15081995</span>.</p>
+        </div>
+
+        <form id="form-login" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-300 mb-1">E-mail Cadastrado:</label>
+            <input type="email" id="login-email" class="vertice-input w-full p-3 text-sm" placeholder="seuemail@exemplo.com" required>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center mb-1">
+              <label class="text-xs font-semibold text-gray-300">Senha:</label>
+              <button type="button" class="text-xs text-rose-400 hover:underline" onclick="window.app.closeModal('modal-auth'); window.app.openModal('modal-forgot-password')">Esqueci minha senha</button>
+            </div>
+            <input type="password" id="login-password" class="vertice-input w-full p-3 text-sm" placeholder="Data de nascimento ou senha atual" required>
+          </div>
+
+          <button type="submit" class="btn-vertice-primary w-full py-3.5 text-sm font-semibold">
+            Entrar na Minha Conta
+          </button>
+        </form>
+
+        <!-- Acesso Rápido para Avaliadores / Teste -->
+        <div class="pt-4 border-t border-white/10 space-y-2">
+          <p class="text-[11px] text-gray-400 text-center uppercase tracking-wider font-semibold">Acesso de Demonstração (1 Clique):</p>
+          <div class="grid grid-cols-2 gap-2">
+            <button id="btn-demo-student" class="btn-vertice-secondary py-2 text-xs">
+              👤 Aluno Demo (Fidelidade)
+            </button>
+            <button id="btn-demo-admin" class="btn-vertice-secondary py-2 text-xs">
+              ⚙️ Admin Master
+            </button>
+          </div>
+        </div>
+
+        <div class="text-center pt-2">
+          <p class="text-xs text-gray-400">Ainda não é aluno Vértice? <button class="text-white underline font-semibold ml-1" onclick="window.app.closeModal('modal-auth'); window.app.openModal('modal-enroll')">Matricule-se agora</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Esqueci Minha Senha -->
+  <div id="modal-forgot-password" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-fade-in">
+      <div class="p-5 bg-surface-2 border-b border-white/10 flex justify-between items-center">
+        <h3 class="font-bold text-white text-base">Recuperar Senha de Acesso</h3>
+        <button data-close-modal="modal-forgot-password" class="text-gray-400 hover:text-white">✕</button>
+      </div>
+      <form id="form-forgot-password" class="p-6 space-y-4">
+        <p class="text-xs text-gray-300">
+          Para restaurar seu acesso, informe seu e-mail cadastrado e sua data de nascimento.
+        </p>
+        <div>
+          <label class="block text-xs text-gray-300 mb-1">E-mail Cadastrado:</label>
+          <input type="email" id="forgot-email" class="vertice-input w-full p-2.5 text-sm" placeholder="aluno@vertice.com.br" required>
+        </div>
+        <div>
+          <label class="block text-xs text-gray-300 mb-1">Sua Data de Nascimento:</label>
+          <input type="text" id="forgot-birth" class="vertice-input w-full p-2.5 text-sm" placeholder="DD/MM/AAAA (ex: 15/08/1995)" required>
+        </div>
+        <button type="submit" class="btn-vertice-primary w-full py-3 text-xs font-semibold">
+          Restaurar Minha Senha Padrão
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Matrícula & Cadastro Rápido -->
+  <div id="modal-enroll" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl animate-fade-in">
+      <div class="p-6 bg-gradient-to-r from-vertice-wine to-vertice-navy text-white flex justify-between items-center">
+        <div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-black/40 text-rose-300 uppercase">Adesão Online</span>
+          <h3 class="font-heading font-black text-xl mt-1">Matricule-se na Vértice Fitness</h3>
+        </div>
+        <button data-close-modal="modal-enroll" class="text-white/80 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <form id="form-register" class="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+        <div class="p-3 bg-black/40 border border-vertice-wine/30 rounded-xl text-xs space-y-1">
+          <p class="text-white font-bold">Plano Vértice São Paulo (89 Unidades):</p>
+          <p class="text-emerald-400 font-bold">R$ 220,00/mês no 1º ano ➔ R$ 70,00/mês após 1 ano!</p>
+          <p class="text-gray-400 text-[11px]">Sua senha de login será automaticamente gerada com a sua data de nascimento.</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-gray-300 mb-1">Nome Completo:</label>
+          <input type="text" id="reg-name" class="vertice-input w-full p-2.5 text-sm" placeholder="Ex: Roberto Oliveira" required>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-gray-300 mb-1">E-mail Principal:</label>
+            <input type="email" id="reg-email" class="vertice-input w-full p-2.5 text-sm" placeholder="seu@email.com" required>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-300 mb-1">Data de Nascimento (Senha):</label>
+            <input type="text" id="reg-birth" class="vertice-input w-full p-2.5 text-sm" placeholder="DD/MM/AAAA" required>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-gray-300 mb-1">WhatsApp / Telefone:</label>
+            <input type="text" id="reg-phone" class="vertice-input w-full p-2.5 text-sm" placeholder="(11) 99999-9999">
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-300 mb-1">Unidade de Referência:</label>
+            <select id="register-gym-select" class="vertice-input w-full p-2.5 text-xs">
+              <!-- Populado via app.js -->
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-vertice-primary w-full py-4 text-sm font-bold shadow-xl mt-4">
+          Concluir Matrícula & Acessar Painel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Área do Cliente Completa (Dashboard do Aluno) -->
+  <div id="modal-client-dashboard" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-3 sm:p-6">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-4xl h-[90vh] flex flex-col overflow-hidden shadow-2xl animate-fade-in">
+      <div class="p-5 bg-gradient-to-r from-vertice-wine to-vertice-navy border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img id="dash-client-avatar" src="" class="w-12 h-12 rounded-full object-cover border-2 border-white/30">
+          <div>
+            <h3 id="dash-client-name" class="font-heading font-black text-lg text-white">Nome do Aluno</h3>
+            <p id="dash-client-email" class="text-xs text-gray-300">aluno@email.com</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="btn-logout" class="btn-vertice-outline px-3 py-1.5 text-xs text-rose-300 hover:border-rose-400">
+            Sair da Conta
+          </button>
+          <button data-close-modal="modal-client-dashboard" class="text-white hover:text-gray-300 text-xl font-bold">✕</button>
+        </div>
+      </div>
+
+      <div class="bg-surface-2 px-5 py-2 border-b border-white/10 flex gap-2 overflow-x-auto">
+        <button class="client-tab-btn px-4 py-2 rounded-lg text-xs font-semibold bg-vertice-wine text-white transition" data-tab="tab-perfil">
+          Perfil & Fidelidade
+        </button>
+        <button class="client-tab-btn px-4 py-2 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition" data-tab="tab-agendamentos">
+          Meus Agendamentos
+        </button>
+        <button class="client-tab-btn px-4 py-2 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition" data-tab="tab-pagamentos">
+          Pagamentos & Mensalidades
+        </button>
+        <button class="client-tab-btn px-4 py-2 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition" data-tab="tab-seguranca">
+          Alterar Senha
+        </button>
+      </div>
+
+      <div class="flex-1 p-6 overflow-y-auto space-y-6">
+        <div id="tab-perfil" class="client-tab-content space-y-6">
+          <div class="p-6 rounded-2xl bg-gradient-fidelity border border-vertice-wine/50 space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-3 py-1 rounded bg-vertice-wine text-white uppercase tracking-wider">
+                Programa Fidelidade Vértice
+              </span>
+              <span id="fidelity-months-counter" class="text-xs font-bold text-amber-300">
+                8 de 12 meses concluídos
+              </span>
+            </div>
+
+            <div>
+              <h4 class="font-heading font-black text-xl text-white">Sua Jornada até a Mensalidade de R$ 70,00/mês</h4>
+              <div id="fidelity-status-text" class="mt-1"></div>
+            </div>
+
+            <div class="w-full bg-black/60 rounded-full h-4 p-0.5 border border-white/10 overflow-hidden">
+              <div id="fidelity-progress-fill" class="bg-gradient-to-r from-vertice-wine to-emerald-400 h-full rounded-full transition-all duration-700" style="width: 66%;"></div>
+            </div>
+
+            <div class="flex justify-between text-[11px] text-gray-400 pt-1">
+              <span>Mês 1 (R$ 220,00)</span>
+              <span>Mês 6</span>
+              <span class="text-emerald-400 font-bold">Mês 12 ➔ R$ 70,00/mês permanente</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-surface-2 border border-white/5 space-y-2">
+              <p class="text-xs text-gray-400">Plano Atual & Status:</p>
+              <p id="dash-client-plan" class="font-bold text-white text-base">Plano Vértice Anual (R$ 220,00/mês)</p>
+              <span class="inline-block text-[11px] font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/40">Status: Regular / Ativo</span>
+            </div>
+            <div class="p-4 rounded-xl bg-surface-2 border border-white/5 space-y-2">
+              <p class="text-xs text-gray-400">Academia Escolhida (Base):</p>
+              <p id="dash-client-gym" class="font-bold text-white text-base">Vértice Paulista Prime</p>
+              <span class="inline-block text-[11px] text-blue-300 bg-vertice-navy px-2 py-0.5 rounded">Livre acesso às 89 unidades</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-agendamentos" class="client-tab-content hidden space-y-4">
+          <div class="flex justify-between items-center mb-2">
+            <h4 class="text-sm font-bold text-white">Consultas & Diárias Agendadas</h4>
+            <button onclick="window.app.closeModal('modal-client-dashboard'); window.app.switchView('personal');" class="text-xs text-vertice-wine font-semibold hover:underline">+ Contratar Nova Diária</button>
+          </div>
+          <div id="client-appointments-list" class="space-y-3"></div>
+        </div>
+
+        <div id="tab-pagamentos" class="client-tab-content hidden space-y-4">
+          <h4 class="text-sm font-bold text-white">Histórico de Cobranças & Recibos</h4>
+          <div id="client-payments-list" class="space-y-2"></div>
+        </div>
+
+        <div id="tab-seguranca" class="client-tab-content hidden space-y-4 max-w-md">
+          <h4 class="text-sm font-bold text-white">Segurança da Conta</h4>
+          <p class="text-xs text-gray-400">Após seu primeiro acesso com a data de nascimento, você pode definir uma nova senha personalizada.</p>
+          <form id="form-change-password" class="space-y-3">
+            <div>
+              <label class="block text-xs text-gray-300 mb-1">Senha Atual:</label>
+              <input type="password" id="change-curr-pass" class="vertice-input w-full p-2.5 text-xs" required>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-300 mb-1">Nova Senha:</label>
+              <input type="password" id="change-new-pass" class="vertice-input w-full p-2.5 text-xs" required>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-300 mb-1">Confirmar Nova Senha:</label>
+              <input type="password" id="change-confirm-pass" class="vertice-input w-full p-2.5 text-xs" required>
+            </div>
+            <button type="submit" class="btn-vertice-primary w-full py-2.5 text-xs font-semibold">Salvar Nova Senha</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5: Detalhe da Academia -->
+  <div id="modal-gym-detail" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl animate-fade-in relative">
+      <button data-close-modal="modal-gym-detail" class="absolute top-4 right-4 z-20 text-white bg-black/60 rounded-full w-8 h-8 flex items-center justify-center hover:bg-black font-bold">✕</button>
+      <div id="gym-detail-content"></div>
+    </div>
+  </div>
+
+  <!-- Modal 6: Detalhe de Exercício / Tutorial -->
+  <div id="modal-exercise-detail" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl animate-fade-in relative">
+      <button data-close-modal="modal-exercise-detail" class="absolute top-4 right-4 z-20 text-white bg-black/60 rounded-full w-8 h-8 flex items-center justify-center hover:bg-black font-bold">✕</button>
+      <div id="exercise-detail-content"></div>
+    </div>
+  </div>
+
+  <!-- Modal 7: Contratação de Personal Trainer (Wizard) -->
+  <div id="modal-personal-booking" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-xl overflow-hidden shadow-2xl animate-fade-in">
+      <div class="p-5 bg-gradient-to-r from-vertice-wine to-vertice-navy text-white flex justify-between items-center">
+        <div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-black/40 text-amber-300 uppercase">Diária Exclusiva</span>
+          <h3 class="font-heading font-black text-lg mt-0.5">Contratar Personal Trainer</h3>
+        </div>
+        <button data-close-modal="modal-personal-booking" class="text-white hover:text-gray-300 font-bold">✕</button>
+      </div>
+      <div id="personal-wizard-content" class="p-6"></div>
+    </div>
+  </div>
+
+  <!-- Modal 8: Como Usar TotalPass na Vértice -->
+  <div id="modal-totalpass" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-fade-in">
+      <div class="p-6 bg-black border-b border-white/10 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-white text-black flex items-center justify-center font-black text-sm">
+            TP
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-white text-base">TotalPass na Vértice</h3>
+            <p class="text-xs text-gray-400">Guia de Acesso às 89 Unidades</p>
+          </div>
+        </div>
+        <button data-close-modal="modal-totalpass" class="text-gray-400 hover:text-white font-bold">✕</button>
+      </div>
+
+      <div class="p-6 space-y-4">
+        <ol class="space-y-3 text-xs text-gray-300">
+          <li class="flex items-start gap-3 p-3 bg-surface-2 rounded-lg border border-white/5">
+            <span class="w-6 h-6 rounded-full bg-vertice-wine text-white flex items-center justify-center font-bold text-xs flex-shrink-0">1</span>
+            <span>Certifique-se de que sua assinatura corporativa TotalPass está ativa no plano compatível.</span>
+          </li>
+          <li class="flex items-start gap-3 p-3 bg-surface-2 rounded-lg border border-white/5">
+            <span class="w-6 h-6 rounded-full bg-vertice-wine text-white flex items-center justify-center font-bold text-xs flex-shrink-0">2</span>
+            <span>Abra o aplicativo TotalPass no seu celular ao chegar na recepção de qualquer academia Vértice em SP.</span>
+          </li>
+          <li class="flex items-start gap-3 p-3 bg-surface-2 rounded-lg border border-white/5">
+            <span class="w-6 h-6 rounded-full bg-vertice-wine text-white flex items-center justify-center font-bold text-xs flex-shrink-0">3</span>
+            <span>Escaneie o QR Code do totem na entrada para liberar a catraca automaticamente.</span>
+          </li>
+          <li class="flex items-start gap-3 p-3 bg-surface-2 rounded-lg border border-white/5">
+            <span class="w-6 h-6 rounded-full bg-vertice-wine text-white flex items-center justify-center font-bold text-xs flex-shrink-0">4</span>
+            <span>Aproveite musculação, cardio, vestiários e todas as áreas da unidade!</span>
+          </li>
+        </ol>
+
+        <div class="p-3 bg-vertice-navy/40 border border-blue-900/40 rounded-xl text-center">
+          <p class="text-xs text-blue-300 font-medium">Você tem direito ao mesmo padrão premium de todos os nossos alunos.</p>
+        </div>
+
+        <button data-close-modal="modal-totalpass" class="btn-vertice-primary w-full py-3 text-xs font-semibold">Entendi, obrigado!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 9: Painel Administrativo Master -->
+  <div id="modal-admin-dashboard" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-3 sm:p-6">
+    <div class="bg-surface-1 border border-vertice-wine/50 rounded-2xl w-full max-w-5xl h-[90vh] flex flex-col overflow-hidden shadow-2xl animate-fade-in">
+      <div class="p-5 bg-gradient-to-r from-vertice-navy to-vertice-wine flex items-center justify-between text-white">
+        <div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-black/50 text-amber-300 uppercase">Gestão da Rede Vértice</span>
+          <h3 class="font-heading font-black text-lg">Painel Administrativo Master</h3>
+        </div>
+        <button data-close-modal="modal-admin-dashboard" class="text-white hover:text-gray-300 text-xl font-bold">✕</button>
+      </div>
+
+      <div class="flex-1 p-6 overflow-y-auto space-y-6">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="p-4 rounded-xl bg-surface-2 border border-white/5 text-center">
+            <span class="text-xs text-gray-400 block font-medium">Academias SP:</span>
+            <span id="admin-stat-gyms" class="text-2xl font-black text-white">89</span>
+          </div>
+          <div class="p-4 rounded-xl bg-surface-2 border border-white/5 text-center">
+            <span class="text-xs text-gray-400 block font-medium">Clientes Ativos:</span>
+            <span id="admin-stat-clients" class="text-2xl font-black text-rose-400">2</span>
+          </div>
+          <div class="p-4 rounded-xl bg-surface-2 border border-white/5 text-center">
+            <span class="text-xs text-gray-400 block font-medium">Personais Credenciados:</span>
+            <span id="admin-stat-personals" class="text-2xl font-black text-blue-400">5</span>
+          </div>
+          <div class="p-4 rounded-xl bg-surface-2 border border-white/5 text-center">
+            <span class="text-xs text-gray-400 block font-medium">Avaliações Médicas:</span>
+            <span id="admin-stat-appts" class="text-2xl font-black text-emerald-400">1</span>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-xl bg-surface-2 border border-white/5 space-y-4">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>+</span> Cadastrar Nova Unidade na Rede de Academias
+          </h4>
+          <form id="form-new-gym" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Nome da Academia:</label>
+              <input type="text" id="new-gym-name" class="vertice-input w-full p-2 text-xs" placeholder="Ex: Vértice Vila Mariana 2" required>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Região de SP:</label>
+              <select id="new-gym-region" class="vertice-input w-full p-2 text-xs">
+                <option value="Capital - Centro/Paulista">Capital - Centro/Paulista</option>
+                <option value="Capital - Zona Sul">Capital - Zona Sul</option>
+                <option value="Capital - Zona Oeste">Capital - Zona Oeste</option>
+                <option value="Capital - Zona Leste">Capital - Zona Leste</option>
+                <option value="Capital - Zona Norte">Capital - Zona Norte</option>
+                <option value="Grande SP - ABC">Grande SP - ABC</option>
+                <option value="Interior de SP">Interior de SP</option>
+                <option value="Litoral Paulista">Litoral Paulista</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">Telefone:</label>
+              <input type="text" id="new-gym-phone" class="vertice-input w-full p-2 text-xs" placeholder="(11) 3333-0000">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-[11px] text-gray-400 mb-1">Endereço Completo:</label>
+              <input type="text" id="new-gym-address" class="vertice-input w-full p-2 text-xs" placeholder="Rua / Av., Número - Bairro, Cidade - SP" required>
+            </div>
+            <div>
+              <label class="block text-[11px] text-gray-400 mb-1">CEP:</label>
+              <input type="text" id="new-gym-cep" class="vertice-input w-full p-2 text-xs" placeholder="00000-000">
+            </div>
+            <div class="sm:col-span-3">
+              <button type="submit" class="btn-vertice-primary w-full py-2.5 text-xs font-semibold">Salvar Unidade no Sistema</button>
+            </div>
+          </form>
+        </div>
+
+        <div>
+          <h4 class="text-sm font-bold text-white mb-2">Unidades Gerenciadas (Amostra Inicial):</h4>
+          <div class="overflow-x-auto rounded-xl border border-white/10">
+            <table class="w-full text-left bg-black/40">
+              <thead>
+                <tr class="border-b border-white/10 text-[11px] text-gray-400 uppercase bg-surface-2">
+                  <th class="p-2">ID</th>
+                  <th class="p-2">Nome</th>
+                  <th class="p-2">Região</th>
+                  <th class="p-2">Telefone</th>
+                  <th class="p-2 text-right">Ação</th>
+                </tr>
+              </thead>
+              <tbody id="admin-gyms-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 10: Termos de Uso -->
+  <div id="modal-terms" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-md p-6 space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-white text-base">Termos de Uso - Vértice Fitness</h3>
+        <button data-close-modal="modal-terms" class="text-gray-400 hover:text-white">✕</button>
+      </div>
+      <div class="text-xs text-gray-300 space-y-2 max-h-60 overflow-y-auto pr-1">
+        <p>1. O acesso a todas as 89 academias do Estado de São Paulo é concedido aos titulares de planos ativos.</p>
+        <p>2. A regra de fidelidade concede o benefício de mensalidade a R$ 70,00 após 12 meses ininterruptos de vigência no plano regular de R$ 220,00/mês.</p>
+        <p>3. A avaliação médica gratuita tem validade periódica para garantir a segurança dos praticantes de atividade física.</p>
+      </div>
+      <button data-close-modal="modal-terms" class="btn-vertice-secondary w-full py-2 text-xs">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Modal 11: Política de Privacidade -->
+  <div id="modal-privacy" class="vertice-modal hidden fixed inset-0 z-50 modal-backdrop items-center justify-center p-4">
+    <div class="bg-surface-1 border border-vertice-subtle rounded-2xl w-full max-w-md p-6 space-y-4">
+      <div class="flex justify-between items-center">
+        <h3 class="font-bold text-white text-base">Política de Privacidade</h3>
+        <button data-close-modal="modal-privacy" class="text-gray-400 hover:text-white">✕</button>
+      </div>
+      <div class="text-xs text-gray-300 space-y-2 max-h-60 overflow-y-auto pr-1">
+        <p>A Vértice Fitness zela pelo sigilo e proteção dos dados dos clientes conforme as normas da LGPD (Lei Geral de Proteção de Dados).</p>
+        <p>Os dados de login, histórico de agendamentos e fichas médicas são protegidos e confidenciais.</p>
+      </div>
+      <button data-close-modal="modal-privacy" class="btn-vertice-secondary w-full py-2 text-xs">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Toast Container Flutuante para Mensagens do Sistema -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Leaflet JS para Mapas -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Scripts da Aplicação Vértice (sem módulos ES para compatibilidade com file://) -->
+  <script src="js/database-standalone.js"></script>
+  <script src="js/app-standalone.js"></script>
+</body>
+</html>
