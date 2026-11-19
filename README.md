@@ -6,3 +6,4 @@ Projeto web desenvolvido para apresentação de uma rede de academias, contendo 
 - HTML5
 - CSS3
 - JavaScript
+Alteração feita na branch teste.
